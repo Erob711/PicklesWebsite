@@ -28,6 +28,21 @@ const LoginPage = (props) => {
     setLoginForm(tempForm);
   };
 
+  const checkEmail = (email) => {
+    fetch('http://localhost:8081/logins', {
+      method: 'POST',
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let validForm = true;
@@ -53,6 +68,7 @@ const LoginPage = (props) => {
 
       //mock login
       if (loginForm.email !== 'error@example.com') {
+        checkEmail(loginForm.email);
         navigate('/account');
         window.localStorage.setItem('key', 'sampleToken');
       } else {
